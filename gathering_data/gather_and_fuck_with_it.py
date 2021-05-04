@@ -4,6 +4,7 @@ from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 import logging
 
+
 def make_returns(time_series):
     try:
         assert type(time_series) == pd.DataFrame, "a dataframe, A DATAFRAME!"
@@ -13,11 +14,12 @@ def make_returns(time_series):
         logging.exception(err)
         raise err
 
-def get_ticker(ticker_list, start = "2000-01-01", end = None, log_returns = False):
+
+def get_ticker(ticker_list, start="2000-01-01", end=None, log_returns=False):
     try:
         assert type(ticker_list) == list, "list means [ticker1, ticker2,...]"
-        #assert type(start) == str or None, "like this 'yyyy-mm-dd'"
-        #assert type(end) == str or None, "like this 'yyyy-mm-dd'"
+        # assert type(start) == str or None, "like this 'yyyy-mm-dd'"
+        # assert type(end) == str or None, "like this 'yyyy-mm-dd'"
         assert type(log_returns) == bool, "True or False, don't even know how you got here"
         lista_data = []
         for i in ticker_list:
@@ -41,13 +43,14 @@ def get_ticker(ticker_list, start = "2000-01-01", end = None, log_returns = Fals
 def scaler_timeseries(time_series):
     try:
         assert type(time_series) == pd.DataFrame, "a pandas dataframe that is time series in columns, pls"
-        scaler = MinMaxScaler(feature_range=(-1,1))
+        scaler = MinMaxScaler(feature_range=(-1, 1))
         scaled_data = scaler.fit_transform(X=time_series.to_numpy().reshape(-1, 1))
         data_scaled_indexed = pd.Series(scaled_data.reshape(1, -1)[0], index=time_series.index)
         return data_scaled_indexed
     except AssertionError as err:
         logging.exception(err)
         raise err
+
 
 def historical_mean_and_cov(time_series):
     try:
